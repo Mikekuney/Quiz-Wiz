@@ -10,7 +10,7 @@
     list-style: none;
 } 
 
-.highscores {
+.highScores {
     list-style: none;
 }
 
@@ -58,5 +58,5 @@ h3 {
 
 .answerButton:hover {
     box-shadow: 1px 1px 10px rgba(25, 19, 0, 0.5);
-
+    background-color: rgb(48, 238, 41)
 }

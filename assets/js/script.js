@@ -4,8 +4,8 @@ var countdown = document.querySelector(".countdown")
 var secondsLeft = document.querySelector(".seconds-left")
 var startButton = document.querySelector(".start-btn")
 var questionsText = document.querySelector(".questions-text")
-var buttonsList = document.querySelector(".btns")
-var highScoresList = document.querySelector(".highscores")
+var buttonsList = document.querySelector(".buttonsList")
+var highScoresList = document.querySelector(".highScores")
 
 
 // global variables
@@ -24,9 +24,9 @@ var newScores;
 var highScores;
 var loadScores;
 var newHighScores;
-var buttonArray;
-var correctButton;
-var incorrectButton;
+var buttonArray = [];
+var correctButton = 0;
+var incorrectButton = 0;
 var buttonOne;
 var buttonTwo;
 var buttonThree;
@@ -94,7 +94,7 @@ function timeDown() {
         clearInterval(timeCount);
         return endGame();
     }
-    clock.innerHTML = timer;
+    secondsLeft.innerHTML = timer;
 };
 
 // create elements
@@ -144,7 +144,7 @@ function questionFunction() {
 //answer function
 function answers() {
     ulListEl.style.display = "block";
-    var buttonAnswer = questions[newQuestion].answers;
+    var buttonAnswer = questions[newQuestion].answer;
     buttonOne.innerHTML = buttonAnswer[0];
     buttonTwo.innerHTML = buttonAnswer[1];
     buttonThree.innerHTML = buttonAnswer[2];
@@ -154,14 +154,14 @@ function answers() {
 var checkAnswers;
 var buttonClick = document.querySelectorAll(".answerButton").forEach(element => {
     element.addEventListener("click", event => {
-        checkAnswer = element.innerHTML;
+        checkAnswers = element.innerHTML;
         rightOrWrong();
     })
 });
 
 // if else for correct/incorrect answers
 function rightOrWrong() {
-    if( checkAnswer === questions[newQuestion].answer[questions[newQuestion].correctAnswer]){
+    if( checkAnswers === questions[newQuestion].answer[questions[newQuestion].correctAnswer]){
         timer = timer + 3;
         listItemEl.style.backgroundColor = "green";
         listItemEl.style.transition = "background-color 0.25s ease-out";
@@ -179,7 +179,7 @@ function rightOrWrong() {
     }
     newQuestion++;
 
-    if(newQuestion + 1 > question.length) {
+    if(newQuestion + 1 > questions.length) {
         endGame();
     } else {
         questionFunction();
@@ -200,7 +200,7 @@ function endGame() {
         yourScore = correctButton
     }
 
-    clock.innerHTMl = "Your Score: " + yourScore + "! Enter your Initials to save your score!";
+    secondsLeft.innerHTMl = "Your Score: " + yourScore + "! Enter your Initials to save your score!";
 
     countdown.innerHTML = "Game Over";
 
