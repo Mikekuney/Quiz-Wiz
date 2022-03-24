@@ -160,7 +160,105 @@ var buttonClick = document.querySelectorAll(".answerButton").forEach(element => 
 });
 
 // if else for correct/incorrect answers
-function rightOrWrong()
+function rightOrWrong() {
+    if( checkAnswer === questions[newQuestion].answer[questions[newQuestion].correctAnswer]){
+        timer = timer + 3;
+        listItemEl.style.backgroundColor = "green";
+        listItemEl.style.transition = "background-color 0.25s ease-out";
 
+        correctButton++;
+    } else {
+        listItemEl.style.backgroundColor = "red";
+        listItemEl.style.transition = "background-color 0.25s ease-out";
+
+        if(timer <= 3) {
+            timer = 1;
+        } else {
+            timer = timer - 5;
+        }
+    }
+    newQuestion++;
+
+    if(newQuestion + 1 > question.length) {
+        endGame();
+    } else {
+        questionFunction();
+    }
+};
 // timer interval clear and shows user score
-function endGame()
+function endGame() {
+
+    listItemEl.style.display = "none";
+    questionsText.style.display = "none";
+
+    clearInterval(timeCount);
+    if(timer > 1) {
+        yourScore = correctButton * timer;
+    } else if(timer === 1) {
+        yourScore = correctButton + 2
+    } else {
+        yourScore = correctButton
+    }
+
+    clock.innerHTMl = "Your Score: " + yourScore + "! Enter your Initials to save your score!";
+
+    countdown.innerHTML = "Game Over";
+
+    scores();
+};
+
+// enter initials to save scores
+
+function scores() {
+
+    initialsText = document.createElement("input");
+    initialsText.setAttribute("type", "text");
+    initialsText.setAttribute("maxLength", "4");
+
+    submitButton = createItem("button", "submitButton");
+    submitButton.innerHTML = "Save Score";
+
+    ulListEl.appendChild(initialsText);
+    ulListEl.appendChild(submitButton);
+
+    submitButton.addEventListener("click",saveScore);
+};
+
+// save to local storage
+
+function saveScore() {
+
+    submitScore = {
+        "name": initialsText.value,
+        "score": yourScore
+    }
+
+    loadScores = JSON.parse(localStorage.getItem('score')) || [];
+
+    loadScores.push(submitScore);
+    console.log(loadScores);
+
+    var sortedScores = loadScores.sort(function(a,b){return b.score - a.score});
+    console.log(sortedScores);
+
+    for(var i = 0; i < sortedScores.length; i++) {
+        var scoreLi = createItem("li", "scoreLi");
+        scoreLi.innerHTML = sortedScores[i].name + " " + sortedScores[i].score;
+        scoreLi.style.listStyle = "none";
+        highScoresList.appendChild(scoreLi);
+    }
+
+    newScores = localStorage.setItem("scores", JSON.stringify(sortedScores));
+
+    playAgainFunction();
+};
+
+// start quiz Again
+function playAgainFunction() {
+    initialsText.value = "";
+    initialsText.style.display = "none";
+    submitButton.style.display = "none";
+    secondsLeft.style.display = "none";
+    playAgain.style.display = "block";
+    startButton.style.display = "block";
+}
