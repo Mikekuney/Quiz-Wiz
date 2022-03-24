@@ -1,0 +1,15 @@
+:root {
+
+}
+
+* { 
+    padding: 2px;
+    margin: 2px;
+    text-align: center;
+    background-color: rgb(39, 41, 121);
+    color: rgb(48, 238, 41);
+}
+
+.clock {
+    font-size: 40px;
+}
