@@ -14,5 +14,6 @@
 
 # Website
 - https://mikekuney.github.io/Quiz-Wiz/
+![Screenshot (quiz-wiz)](https://user-images.githubusercontent.com/96913841/159973229-2ef74d5f-68a6-41d1-be44-180ae58ab458.png)
 
 # Contributions made by Mike Kuney
